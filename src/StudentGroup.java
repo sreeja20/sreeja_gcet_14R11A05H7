@@ -69,12 +69,10 @@ public class StudentGroup implements StudentArrayOperation {
         // Add your implementation here
         if (student == null)
             throw new IllegalArgumentException();
-        Student newList[] = new Student[students.length+1];
-        newList[0] = student;
-        for (int i = 0; i < students.length; i++) {
-            newList[i+1] = students[i];
+        for (int i = students.length-1; i > 0; i--) {
+            students[i] = students[i-1];
         }
-        students = newList;
+        students[0] = student;
     }
 
     @Override
@@ -82,12 +80,7 @@ public class StudentGroup implements StudentArrayOperation {
         // Add your implementation here
         if (student == null)
             throw new IllegalArgumentException();
-        Student newList[] = new Student[students.length+1];
-        for (int i = 0; i < students.length; i++) {
-            newList[i] = students[i];
-        }
-        newList[students.length] = student;
-        students = newList;
+        students[students.length-1] = student;
     }
 
     @Override
@@ -95,15 +88,10 @@ public class StudentGroup implements StudentArrayOperation {
         // Add your implementation here
         if (student == null || index < 0 || index >= students.length)
             throw new IllegalArgumentException();
-        Student newList[] = new Student[students.length+1];
-        for (int i = 0; i < index; i++) {
-            newList[i] = students[i];
+        for (int i = students.length-1; i > index; i--) {
+            students[i] = students[i-1];
         }
-        newList[index] = student;
-        for (int i = index ; i < students.length; i++) {
-            newList[i+1] = students[i];
-        }
-        students = newList;
+        students[index] = student;
     }
 
     @Override
@@ -111,15 +99,11 @@ public class StudentGroup implements StudentArrayOperation {
         // Add your implementation here
         if (index < 0 || index >= students.length)
             throw new IllegalArgumentException();
-        Student newList[] = new Student[students.length-1];
-        int j=0;
-        for (int i = 0; i < students.length; i++) {
-            if (i != index) {
-                newList[j] = students[i];
-                j++;
-            }
+        int i;
+        for(i=index; i < students.length-1 ;i++) {
+            students[i] = students[i+1];
         }
-        students = newList;
+        students[i] = null;
     }
 
     @Override
@@ -140,11 +124,10 @@ public class StudentGroup implements StudentArrayOperation {
         // Add your implementation here
         if (index < 0 || index >= students.length)
             throw new IllegalArgumentException();
-        Student newList[] = new Student[index];
-        for (int i = 0; i < index; i++) {
-            newList[i] = students[i];
+
+        for (int i = index; i < students.length; i++) {
+            students[i] = null;
         }
-        students = newList;
     }
 
     @Override
@@ -165,14 +148,9 @@ public class StudentGroup implements StudentArrayOperation {
         // Add your implementation here
         if (index < 0 || index >= students.length)
             throw new IllegalArgumentException();
-        int newLen = students.length - index -1;
-        Student newList[] = new Student[newLen];
-        int j=0;
-        for (int i = index +1 ; i < students.length ; i++) {
-            newList[j] = students[i];
-            j++;
+        for (int i = 0; i <= index; i++) {
+            remove(0);
         }
-        students = newList;
     }
 
     @Override
@@ -180,10 +158,13 @@ public class StudentGroup implements StudentArrayOperation {
         // Add your implementation here
         if (student == null)
             throw new IllegalArgumentException();
+        Student temp[]= new Student[students.length];
         for (int i = 0; i < students.length; i++) {
-            if (students[i].equals(student)) {
+            temp[i] = students[i];
+        }
+        for (int i = 0; i < temp.length; i++) {
+            if (temp[i].equals(student)) {
                 removeToIndex(i);
-                break;
             }
         }
     }
